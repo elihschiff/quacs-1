@@ -38,7 +38,8 @@ jobs:
 
       - name: Scrape schools
         working-directory: ./scrapers
-        run: scripts/scrapers_updated.sh && python3 catalog_scraper/main.py schools LATEST_YEAR
+        if: scripts/scrapers_updated.sh
+        run: python3 catalog_scraper/main.py schools LATEST_YEAR
 
       - name: Output semesters
         working-directory: ./scrapers
@@ -92,15 +93,18 @@ jobs:
 
       - name: Scrape courses
         working-directory: ./scrapers
-        run: scripts/scrapers_updated.sh && python3 sis_scraper/main.py
+        if: scripts/scrapers_updated.sh
+        run: python3 sis_scraper/main.py
 
       - name: Scrape prerequisites
         working-directory: ./scrapers
-        run: scripts/scrapers_updated.sh && python3 prerequisites_scraper/main.py
+        if: scripts/scrapers_updated.sh
+        run: python3 prerequisites_scraper/main.py
 
       - name: Build prerequisites graph
         working-directory: ./scrapers
-        run: scripts/scrapers_updated.sh && python3 prerequisites_graph/main.py
+        if: scripts/scrapers_updated.sh
+        run: python3 prerequisites_graph/main.py
 
       - name: Upload prerequisite graph data
         uses: actions/upload-artifact@v2
@@ -182,7 +186,8 @@ jobs:
 
       - name: Scrape faculty
         working-directory: ./scrapers
-        run: scripts/scrapers_updated.sh && python3 faculty_directory_scraper/main.py
+        if: scripts/scrapers_updated.sh
+        run: python3 faculty_directory_scraper/main.py
 
       - name: Upload data
         uses: actions/upload-artifact@v2
@@ -212,7 +217,8 @@ jobs:
 
       - name: Scrape catalog
         working-directory: ./scrapers
-        run: scripts/scrapers_updated.sh && scripts/weekly_scrape.sh && python3 catalog_scraper/main.py catalog LATEST_YEAR
+        if: scripts/scrapers_updated.sh && scripts/weekly_scrape.sh
+        run: python3 catalog_scraper/main.py catalog LATEST_YEAR
 
       - name: Upload data
         uses: actions/upload-artifact@v2
