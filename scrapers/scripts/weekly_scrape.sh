@@ -1,3 +1,7 @@
+
+# NOTE: To use this make sure you checkout with a fetch-depth of 2
+
+
 # Return true this is a scheduled run and it is Fridays(5) and the current hour is 23
 # Or return true if this was a push event and a file in the scrapers folder changed
 if ([ "$GITHUB_EVENT_NAME" = "schedule" ] && date +DOW:%u-HOUR:%H | grep -q "DOW:5-HOUR:23") \
