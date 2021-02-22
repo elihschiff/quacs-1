@@ -153,8 +153,8 @@ jobs:
   #     - name: Scrape courses
   #       run: |
   #           cd degree-planner
+  # Make sure to add the scrapers_updated command to this
   #           python3 scraper.py refresh_data
-
   #     - name: Upload data
   #       uses: actions/upload-artifact@v2
   #       with:
