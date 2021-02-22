@@ -23,6 +23,8 @@ jobs:
 
       - name: Checkout branch
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Set up python
         uses: actions/setup-python@v2
@@ -36,7 +38,7 @@ jobs:
 
       - name: Scrape schools
         working-directory: ./scrapers
-        run: python3 catalog_scraper/main.py schools LATEST_YEAR
+        run: scripts/scrapers_updated.sh && python3 catalog_scraper/main.py schools LATEST_YEAR
 
       - name: Output semesters
         working-directory: ./scrapers
@@ -65,6 +67,8 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Set up python
         uses: actions/setup-python@v2
@@ -88,15 +92,15 @@ jobs:
 
       - name: Scrape courses
         working-directory: ./scrapers
-        run: python3 sis_scraper/main.py
+        run: scripts/scrapers_updated.sh && python3 sis_scraper/main.py
 
       - name: Scrape prerequisites
         working-directory: ./scrapers
-        run: python3 prerequisites_scraper/main.py
+        run: scripts/scrapers_updated.sh && python3 prerequisites_scraper/main.py
 
       - name: Build prerequisites graph
         working-directory: ./scrapers
-        run: python3 prerequisites_graph/main.py
+        run: scripts/scrapers_updated.sh && python3 prerequisites_graph/main.py
 
       - name: Upload prerequisite graph data
         uses: actions/upload-artifact@v2
@@ -163,6 +167,8 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Set up python
         uses: actions/setup-python@v2
@@ -176,7 +182,7 @@ jobs:
 
       - name: Scrape faculty
         working-directory: ./scrapers
-        run: python3 faculty_directory_scraper/main.py
+        run: scripts/scrapers_updated.sh && python3 faculty_directory_scraper/main.py
 
       - name: Upload data
         uses: actions/upload-artifact@v2
@@ -206,7 +212,7 @@ jobs:
 
       - name: Scrape catalog
         working-directory: ./scrapers
-        run: scripts/weekly_scrape.sh && python3 catalog_scraper/main.py catalog LATEST_YEAR
+        run: scripts/scrapers_updated.sh && scripts/weekly_scrape.sh && python3 catalog_scraper/main.py catalog LATEST_YEAR
 
       - name: Upload data
         uses: actions/upload-artifact@v2
@@ -222,6 +228,7 @@ jobs:
       - name: Checkout data repository
         uses: actions/checkout@v2
         with:
+          fetch-depth: 2
           path: 'scrapers/data'
           repository: 'quacs/quacs-data'
           ref: 'master'
